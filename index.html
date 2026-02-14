@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Ti 🤍</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@300;500&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+margin:0;
+padding:0;
+background:linear-gradient(160deg,#f8cdda,#fbc2eb,#fceabb);
+font-family:'Cormorant Garamond', serif;
+text-align:center;
+color:#6a1b3f;
+overflow-x:hidden;
+}
+
+/* Título */
+h1{
+font-family:'Great Vibes', cursive;
+font-size:65px;
+margin-top:60px;
+}
+
+/* Sobre */
+.envelope-container{
+margin-top:40px;
+cursor:pointer;
+}
+
+.envelope{
+width:220px;
+height:140px;
+background:#ff9eb5;
+margin:auto;
+position:relative;
+border-radius:12px;
+transition:0.6s;
+}
+
+.envelope:before{
+content:"";
+position:absolute;
+top:-70px;
+left:0;
+width:0;
+height:0;
+border-left:110px solid transparent;
+border-right:110px solid transparent;
+border-bottom:70px solid #ff9eb5;
+transition:0.6s;
+}
+
+.open .envelope:before{
+transform:rotateX(180deg);
+}
+
+/* Carta */
+.letter{
+opacity:0;
+max-height:0;
+overflow:hidden;
+background:white;
+padding:0 35px;
+margin:30px auto;
+width:85%;
+max-width:650px;
+border-radius:20px;
+box-shadow:0 15px 30px rgba(0,0,0,0.2);
+font-family:'Great Vibes', cursive;
+font-size:26px;
+line-height:1.7;
+transition:1s ease;
+position:relative;
+}
+
+.show-letter{
+opacity:1;
+max-height:1000px;
+padding:35px;
+}
+
+/* Botón cerrar */
+.close-btn{
+position:absolute;
+top:15px;
+right:20px;
+font-size:18px;
+cursor:pointer;
+color:#ff4d88;
+}
+
+/* Galería */
+.gallery{
+opacity:0;
+transform:translateY(30px);
+transition:1.2s ease;
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:20px;
+margin-top:40px;
+}
+
+.show-gallery{
+opacity:1;
+transform:translateY(0);
+}
+
+.gallery img{
+width:220px;
+height:220px;
+object-fit:cover;
+border-radius:25px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+transition:0.4s;
+}
+
+.gallery img:hover{
+transform:scale(1.05);
+}
+
+/* Botón */
+button{
+background:#ff4d88;
+color:white;
+border:none;
+padding:12px 25px;
+border-radius:40px;
+font-size:16px;
+cursor:pointer;
+margin-top:20px;
+transition:0.3s;
+}
+
+button:hover{
+background:#d6336c;
+}
+
+/* Contador */
+.countdown{
+font-size:22px;
+margin-top:30px;
+}
+
+/* Pétalos */
+.petal{
+position:fixed;
+top:-10px;
+font-size:20px;
+animation:fall linear infinite;
+opacity:0.7;
+}
+
+@keyframes fall{
+to{
+transform:translateY(110vh) rotate(360deg);
+opacity:0;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Feliz San Valentín 💌</h1>
+
+<div class="envelope-container" id="envelopeContainer" onclick="toggleLetter()">
+<div class="envelope"></div>
+<p>Haz clic para abrir o cerrar la carta 🤍</p>
+</div>
+
+<div class="letter" id="letter">
+<span class="close-btn" onclick="toggleLetter()">✕</span>
+
+Hola…<br><br>
+Tal vez esto no sea algo que se diga todos los días, pero mi corazón me pidió que lo hiciera. Quería que supieras que lo que siento por ti es algo tan bonito y sincero que me llena de ilusión. A pesar de las circunstancias y de todo lo que pueda parecer difícil, confío en nosotros, en lo que estamos construyendo y en lo que aún nos espera.<br><br>
+Siento que todavía tenemos páginas enteras por escribir, historias que descubrir juntos y aventuras que convertir en recuerdos inolvidables.<br><br>
+Esto es solo un pequeño detalle, pero va cargado de todo mi cariño y mis ganas de seguir compartiendo contigo.<br><br>
+Te quiero 🤍
+</div>
+
+<div class="countdown" id="countdown"></div>
+
+<button onclick="generatePoem()">Poema Secreto ✨</button>
+<p id="poem"></p>
+
+<h2>Nuestros recuerdos 💕</h2>
+
+<div class="gallery" id="gallery">
+<img src="foto1.jpg">
+<img src="foto2.jpg">
+<img src="foto3.jpg">
+<img src="foto4.jpg">
+</div>
+
+<audio id="music" loop>
+<source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3">
+</audio>
+
+<script>
+
+let isOpen = false;
+let music = document.getElementById("music");
+
+function toggleLetter(){
+
+const envelopeContainer = document.getElementById("envelopeContainer");
+const letter = document.getElementById("letter");
+const gallery = document.getElementById("gallery");
+
+if(!isOpen){
+
+envelopeContainer.classList.add("open");
+letter.classList.add("show-letter");
+gallery.classList.add("show-gallery");
+
+music.play();
+music.volume = 0;
+
+let fadeIn = setInterval(function(){
+if(music.volume < 0.6){
+music.volume += 0.02;
+}else{
+clearInterval(fadeIn);
+}
+},200);
+
+isOpen = true;
+
+}else{
+
+envelopeContainer.classList.remove("open");
+letter.classList.remove("show-letter");
+gallery.classList.remove("show-gallery");
+
+let fadeOut = setInterval(function(){
+if(music.volume > 0.02){
+music.volume -= 0.02;
+}else{
+music.pause();
+clearInterval(fadeOut);
+}
+},200);
+
+isOpen = false;
+}
+}
+
+/* Pétalos */
+setInterval(()=>{
+let petal=document.createElement("div");
+petal.className="petal";
+petal.innerHTML="🌸";
+petal.style.left=Math.random()*100+"vw";
+petal.style.animationDuration=(5+Math.random()*5)+"s";
+petal.style.fontSize=(15+Math.random()*20)+"px";
+document.body.appendChild(petal);
+setTimeout(()=>{petal.remove();},9000);
+},600);
+
+/* Cuenta regresiva */
+function updateCountdown(){
+let now = new Date();
+let year = now.getFullYear();
+let target = new Date("February 14, " + year + " 00:00:00");
+if(now > target){
+target = new Date("February 14, " + (year + 1) + " 00:00:00");
+}
+let distance = target - now;
+
+let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+document.getElementById("countdown").innerHTML =
+"Faltan 💕 <strong>"+days+"</strong> días "
++ "<strong>"+hours+"</strong> horas "
++ "<strong>"+minutes+"</strong> minutos "
++ "<strong>"+seconds+"</strong> segundos 💘";
+}
+setInterval(updateCountdown,1000);
+updateCountdown();
+
+/* Poema */
+function generatePoem(){
+let poems=[
+"Eres mi lugar favorito en el mundo.",
+"Tu sonrisa es la luz que ilumina mis días.",
+"Contigo todo es más suave y eterno.",
+"Si el amor tuviera nombre, llevaría el tuyo."
+];
+let random=poems[Math.floor(Math.random()*poems.length)];
+document.getElementById("poem").innerHTML=random;
+}
+
+</script>
+
+</body>
+</html>
